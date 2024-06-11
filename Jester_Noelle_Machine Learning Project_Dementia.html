@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Noelle Jester">
+
+<title>Machine Learning Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Jester_Noelle_Machine Learning Project_Dementia_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Jester_Noelle_Machine Learning Project_Dementia_files/libs/quarto-html/quarto.js"></script>
+<script src="Jester_Noelle_Machine Learning Project_Dementia_files/libs/quarto-html/popper.min.js"></script>
+<script src="Jester_Noelle_Machine Learning Project_Dementia_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Jester_Noelle_Machine Learning Project_Dementia_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Jester_Noelle_Machine Learning Project_Dementia_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Jester_Noelle_Machine Learning Project_Dementia_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Jester_Noelle_Machine Learning Project_Dementia_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Jester_Noelle_Machine Learning Project_Dementia_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Jester_Noelle_Machine Learning Project_Dementia_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Machine Learning Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Noelle Jester </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dementia_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"C:/Users/noell/Downloads/dementia_dataset.csv"</span>, <span class="at">header=</span>T, <span class="at">stringsAsFactors=</span>T) <span class="do">## load in Dementia data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are NA’s in this data set that we have to get rid of first.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dementia_data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(dementia_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="dementia-data-set" class="level2">
+<h2 class="anchored" data-anchor-id="dementia-data-set">Dementia Data set</h2>
+<p>The dementia set includes 373 individual entries and the data is stored in dementia_data. It contains 15 variables, SubjectID, MRI ID, Group, Visit, MR Delay, F/M,Hand, Age, EDUC, SES, MMSE, CDR, eTIV, nWBV, and ASF. These variable cover a range of demographic, clinical, and neurological factors, providing a comprehensive set of information for the analysis and exploration of dementia-related patterns and characteristics</p>
+<ul>
+<li><strong>Subject ID:</strong> Identification</li>
+<li><strong>MRI ID :</strong> MRI unique identification</li>
+<li><strong>Group:</strong> Nondemented - not affected by dementia / Demented - affected by dementia, Converted</li>
+<li><strong>Visit:</strong> Number of visits</li>
+<li><strong>M/F:</strong> Gender (M if Male, F if Female)</li>
+<li><strong>Hand:</strong> Handedness</li>
+<li><strong>Age:</strong> Age in years</li>
+<li><strong>EDUC:</strong> Years of Education</li>
+<li><strong>SES:</strong> Socioeconomic Status</li>
+<li><strong>MMSE:</strong> Mini Mental State Examination: used to screen and monitor for signs of senile dementia which includes Alzheimer disease, among others.</li>
+<li><strong>CDR:</strong> Clinical Dementia Rating: numeric scale used to quantify the severity of symptoms of dementia.
+<ul>
+<li>0 - Normal</li>
+<li>0.5 - Questionable</li>
+<li>1 - Mild</li>
+<li>2 - Moderate</li>
+<li>3 - Severe</li>
+</ul></li>
+<li><strong>eTIV:</strong> Estimated Total Intracranial Volume: is a measure of the volume inside the cranium, including the brain, meninges, and CSF. It is often preferred over the brain volume because it is a good measure of premorbid brain size.</li>
+<li><strong>nWBV:</strong> Normalize Whole Brain Volume</li>
+<li><strong>ASF:</strong> Atlas Scaling Factor: is a one-parameter scaling factor that provides a reasonable estimation of the total intracranial volume (TIV)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dementia_data) <span class="co"># View first five rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Subject.ID        MRI.ID       Group Visit MR.Delay M.F Hand Age EDUC SES
+1  OAS2_0001 OAS2_0001_MR1 Nondemented     1        0   M    R  87   14   2
+2  OAS2_0001 OAS2_0001_MR2 Nondemented     2      457   M    R  88   14   2
+6  OAS2_0004 OAS2_0004_MR1 Nondemented     1        0   F    R  88   18   3
+7  OAS2_0004 OAS2_0004_MR2 Nondemented     2      538   F    R  90   18   3
+8  OAS2_0005 OAS2_0005_MR1 Nondemented     1        0   M    R  80   12   4
+9  OAS2_0005 OAS2_0005_MR2 Nondemented     2     1010   M    R  83   12   4
+  MMSE CDR eTIV  nWBV   ASF
+1   27 0.0 1987 0.696 0.883
+2   30 0.0 2004 0.681 0.876
+6   28 0.0 1215 0.710 1.444
+7   27 0.0 1200 0.718 1.462
+8   28 0.0 1689 0.712 1.039
+9   29 0.5 1701 0.711 1.032</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(dementia_data) <span class="co"># View last five rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Subject.ID        MRI.ID       Group Visit MR.Delay M.F Hand Age EDUC SES
+368  OAS2_0185 OAS2_0185_MR1    Demented     1        0   M    R  80   16   1
+369  OAS2_0185 OAS2_0185_MR2    Demented     2      842   M    R  82   16   1
+370  OAS2_0185 OAS2_0185_MR3    Demented     3     2297   M    R  86   16   1
+371  OAS2_0186 OAS2_0186_MR1 Nondemented     1        0   F    R  61   13   2
+372  OAS2_0186 OAS2_0186_MR2 Nondemented     2      763   F    R  63   13   2
+373  OAS2_0186 OAS2_0186_MR3 Nondemented     3     1608   F    R  65   13   2
+    MMSE CDR eTIV  nWBV   ASF
+368   28 0.5 1704 0.711 1.030
+369   28 0.5 1693 0.694 1.037
+370   26 0.5 1688 0.675 1.040
+371   30 0.0 1319 0.801 1.331
+372   30 0.0 1327 0.796 1.323
+373   30 0.0 1333 0.801 1.317</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dementia_data) <span class="co"># View dimension</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 354  15</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(dementia_data, class) <span class="do">##class of each column </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Subject.ID     MRI.ID      Group      Visit   MR.Delay        M.F       Hand 
+  "factor"   "factor"   "factor"  "integer"  "integer"   "factor"   "factor" 
+       Age       EDUC        SES       MMSE        CDR       eTIV       nWBV 
+ "integer"  "integer"  "integer"  "integer"  "numeric"  "integer"  "numeric" 
+       ASF 
+ "numeric" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dementia_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Subject.ID" "MRI.ID"     "Group"      "Visit"      "MR.Delay"  
+ [6] "M.F"        "Hand"       "Age"        "EDUC"       "SES"       
+[11] "MMSE"       "CDR"        "eTIV"       "nWBV"       "ASF"       </code></pre>
+</div>
+</div>
+<p>The dataset consists of 15 variables, including 10 numerical variables and 5 categorical variables. The categorical variables include Subject.ID, MRI.ID, Group, M/F, Hand.</p>
+<p>The response variable for this project is the “Group” variable. The other variables are used as characteristics to predict dementia. The objective of this project is to identify key factors that contribute to the prediction of dementia and to assess the model’s performance in distinguishing between different groups. Additionally, I seek to provide insights into the relative importance of these variables in predicting dementia, contributing valuable information for early detection and understanding of the disease.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dementia_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Subject.ID            MRI.ID            Group         Visit      
+ OAS2_0048:  5   OAS2_0001_MR1:  1   Converted  : 37   Min.   :1.000  
+ OAS2_0070:  5   OAS2_0001_MR2:  1   Demented   :127   1st Qu.:1.000  
+ OAS2_0073:  5   OAS2_0004_MR1:  1   Nondemented:190   Median :2.000  
+ OAS2_0127:  5   OAS2_0004_MR2:  1                     Mean   :1.884  
+ OAS2_0017:  4   OAS2_0005_MR1:  1                     3rd Qu.:2.000  
+ OAS2_0027:  4   OAS2_0005_MR2:  1                     Max.   :5.000  
+ (Other)  :326   (Other)      :348                                    
+    MR.Delay      M.F     Hand         Age             EDUC      
+ Min.   :   0.0   F:204   R:354   Min.   :60.00   Min.   : 6.00  
+ 1st Qu.:   0.0   M:150           1st Qu.:71.00   1st Qu.:12.00  
+ Median : 559.5                   Median :77.00   Median :15.00  
+ Mean   : 601.4                   Mean   :77.03   Mean   :14.70  
+ 3rd Qu.: 882.5                   3rd Qu.:82.00   3rd Qu.:16.75  
+ Max.   :2639.0                   Max.   :98.00   Max.   :23.00  
+                                                                 
+      SES            MMSE            CDR              eTIV     
+ Min.   :1.00   Min.   : 4.00   Min.   :0.0000   Min.   :1106  
+ 1st Qu.:2.00   1st Qu.:27.00   1st Qu.:0.0000   1st Qu.:1358  
+ Median :2.00   Median :29.00   Median :0.0000   Median :1470  
+ Mean   :2.46   Mean   :27.41   Mean   :0.2712   Mean   :1490  
+ 3rd Qu.:3.00   3rd Qu.:30.00   3rd Qu.:0.5000   3rd Qu.:1595  
+ Max.   :5.00   Max.   :30.00   Max.   :2.0000   Max.   :2004  
+                                                               
+      nWBV             ASF       
+ Min.   :0.6440   Min.   :0.876  
+ 1st Qu.:0.6990   1st Qu.:1.100  
+ Median :0.7290   Median :1.194  
+ Mean   :0.7299   Mean   :1.194  
+ 3rd Qu.:0.7570   3rd Qu.:1.292  
+ Max.   :0.8370   Max.   :1.587  
+                                 </code></pre>
+</div>
+</div>
+<p>As an initial exploratory analysis, I have generated visualizations to examine the potential impact of each individual variable on the response variable. These visualizations serve as a starting point to gain insights into the relationships between demographic, clinical, and neuroimaging characteristics and their influence on the classification of individuals into different groups related to dementia</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## doing the same plots in ggplot</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdark)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggdark' was built under R version 4.3.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>g_1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dementia_data, <span class="fu">aes</span>(<span class="at">x =</span> ASF, <span class="at">fill=</span> Group)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"ASF"</span>, <span class="at">y =</span> <span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Converted"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"Demented"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"Nondemented"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span>)) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Inverted geom defaults of fill and color/colour.
+To change them back, use invert_geom_defaults().</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>g_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>g_2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dementia_data, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">fill=</span> Group)) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Converted"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"Demented"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"Nondemented"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span>)) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_classic</span>()</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>g_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>g_3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dementia_data, <span class="fu">aes</span>(<span class="at">x =</span> Visit, <span class="at">fill =</span> Group)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Visit"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_classic</span>()</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>g_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>g_4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dementia_data, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> CDR)) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>() <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"CDR"</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_classic</span>()</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>g_4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-5-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Before starting my models I decided to take out the predictor CDR since it is a very strong predictor. It describes the severity of symptoms of dementia and it is involved in classifying dementia patients.For this data set I chose to do random forest and then apply an XGBoost. First, we split the data into training and test data. Used 80/20 ratio since we only have 375 observations. Using Group as a multi-class prediction.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dementia_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(dementia_data, <span class="at">select =</span> <span class="sc">-</span>CDR) </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>dementia_data <span class="ot">&lt;-</span> dementia_data[dementia_data<span class="sc">$</span>Group<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"Converted"</span>, <span class="st">"Demented"</span>, <span class="st">"Nondemented"</span>),]</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>dementia_data<span class="sc">$</span>Group <span class="ot">&lt;-</span> <span class="fu">factor</span>(dementia_data<span class="sc">$</span>Group)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dementia_data<span class="sc">$</span>Group)<span class="sc">/</span><span class="fu">dim</span>(dementia_data)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Converted    Demented Nondemented 
+  0.1045198   0.3587571   0.5367232 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>total_obs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dementia_data)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>total_obs, <span class="fl">0.8</span><span class="sc">*</span>total_obs)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> dementia_data[train_index,]</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> dementia_data[<span class="sc">-</span>train_index,]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dementia_data<span class="sc">$</span>Group)<span class="sc">/</span><span class="fu">dim</span>(dementia_data)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Converted    Demented Nondemented 
+  0.1045198   0.3587571   0.5367232 </code></pre>
+</div>
+</div>
+<p>We next want to check for missing values in the dataset. To make sure that when we got rid of all of the NA’s. We can’t have an NA’s in the response variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(train_data)) <span class="co"># Check missing training data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(test_data)) <span class="co"># Check missing test data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+<section id="random-forest" class="level1">
+<h1>RANDOM FOREST</h1>
+<p>Both data sets do not include any NA’s so we can proceed building a random forest model. First we convert the “Group” column in the training data into a factor. (Factors are used to represent categorical variables). In this random forest model “Group” is the response variable, and the rest of the columns are the explanatory variables. In this case we are only selecting column 4 through 12. The first two columns are not predictors but rather identifiers and the third column is the response variable “Group”. We set the number of trees in the random forest to 1000 and run the model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'randomForest' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>randomForest 4.7-1.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Type rfNews() to see new features/changes/bug fixes.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'randomForest'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    margin</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'caret' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: lattice</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xgboost)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'xgboost' was built under R version 4.3.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>train_data<span class="sc">$</span>Group <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(train_data<span class="sc">$</span>Group)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>rf_mod <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Group <span class="sc">~</span>., <span class="co"># Set tree formula</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(train_data)], <span class="co"># Set dataset</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ntree =</span> <span class="dv">1000</span>) <span class="co"># Set number of trees to use</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>rf_mod <span class="co"># View model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+ randomForest(formula = Group ~ ., data = train_data[, 3:ncol(train_data)],      ntree = 1000) 
+               Type of random forest: classification
+                     Number of trees: 1000
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 21.91%
+Confusion matrix:
+            Converted Demented Nondemented class.error
+Converted           0        7          19  1.00000000
+Demented            0       77          24  0.23762376
+Nondemented         1       11         144  0.07692308</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>rf_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_mod, test_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(test_data)])</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>(rf_preds, test_data<span class="sc">$</span>Group)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(t, <span class="at">positive =</span> <span class="st">"Demented"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+             
+rf_preds      Converted Demented Nondemented
+  Converted           2        0           0
+  Demented            2       22           1
+  Nondemented         7        4          33
+
+Overall Statistics
+                                          
+               Accuracy : 0.8028          
+                 95% CI : (0.6914, 0.8878)
+    No Information Rate : 0.4789          
+    P-Value [Acc &gt; NIR] : 1.983e-08       
+                                          
+                  Kappa : 0.654           
+                                          
+ Mcnemar's Test P-Value : 0.01286         
+
+Statistics by Class:
+
+                     Class: Converted Class: Demented Class: Nondemented
+Sensitivity                   0.18182          0.8462             0.9706
+Specificity                   1.00000          0.9333             0.7027
+Pos Pred Value                1.00000          0.8800             0.7500
+Neg Pred Value                0.86957          0.9130             0.9630
+Prevalence                    0.15493          0.3662             0.4789
+Detection Rate                0.02817          0.3099             0.4648
+Detection Prevalence          0.02817          0.3521             0.6197
+Balanced Accuracy             0.59091          0.8897             0.8366</code></pre>
+</div>
+</div>
+<p>The overall accuracy of this model is 0.8028. Not bad for the beginning. Now I will try bagging with my random forest model to see if that will increase the overall accuracy.</p>
+<section id="bootstrap-aggregation-bagging" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrap-aggregation-bagging"><strong>Bootstrap Aggregation (Bagging)</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>) <span class="co"># Set random number generator seed for reproducability</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Use random forest to do bagging</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>bag_mod <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Group <span class="sc">~</span>., <span class="co"># Set tree formula</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> train_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(train_data)], <span class="co"># Set dataset</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">mtry =</span> <span class="dv">11</span>, <span class="co"># Set mtry to number of variables </span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">ntree =</span> <span class="dv">1000</span>) <span class="co"># Set number of trees to use</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>bag_mod <span class="co"># View model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+ randomForest(formula = Group ~ ., data = train_data[, 3:ncol(train_data)],      mtry = 11, ntree = 1000) 
+               Type of random forest: classification
+                     Number of trees: 1000
+No. of variables tried at each split: 11
+
+        OOB estimate of  error rate: 24.38%
+Confusion matrix:
+            Converted Demented Nondemented class.error
+Converted           0        8          18   1.0000000
+Demented            0       74          27   0.2673267
+Nondemented         2       14         140   0.1025641</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>bag_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(bag_mod, test_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(test_data)])</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>(bag_preds, test_data<span class="sc">$</span>Group)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(t, <span class="at">positive =</span> <span class="st">"Demented"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+             
+bag_preds     Converted Demented Nondemented
+  Converted           5        0           0
+  Demented            2       23           2
+  Nondemented         4        3          32
+
+Overall Statistics
+                                        
+               Accuracy : 0.8451        
+                 95% CI : (0.7397, 0.92)
+    No Information Rate : 0.4789        
+    P-Value [Acc &gt; NIR] : 1.531e-10     
+                                        
+                  Kappa : 0.736         
+                                        
+ Mcnemar's Test P-Value : 0.1023        
+
+Statistics by Class:
+
+                     Class: Converted Class: Demented Class: Nondemented
+Sensitivity                   0.45455          0.8846             0.9412
+Specificity                   1.00000          0.9111             0.8108
+Pos Pred Value                1.00000          0.8519             0.8205
+Neg Pred Value                0.90909          0.9318             0.9375
+Prevalence                    0.15493          0.3662             0.4789
+Detection Rate                0.07042          0.3239             0.4507
+Detection Prevalence          0.07042          0.3803             0.5493
+Balanced Accuracy             0.72727          0.8979             0.8760</code></pre>
+</div>
+</div>
+<p>Overall Accuracy of 0.8451. By using bagging we achieved an overall accuracy of 0.8451 compared to 0.828. The difference is definitely substantial compared to original random forest.</p>
+<p>One of the benefits of using the random forest function is that we can see the out-of-bag error for the tree as each tree is built. We can then plot these to analyse if the model has converged to the optimal solution or is still converging.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>oob_error <span class="ot">&lt;-</span> bag_mod<span class="sc">$</span>err.rate[,<span class="dv">1</span>] <span class="co"># Extract oob error</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>plot_dat <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(oob_error)), oob_error) <span class="co"># Create plot data</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(plot_dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"trees"</span>, <span class="st">"oob_error"</span>) <span class="co"># Name plot data</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot oob error</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>g_1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_dat, <span class="fu">aes</span>(<span class="at">x =</span> trees, <span class="at">y =</span> oob_error)) <span class="sc">+</span> <span class="co"># Set x as trees and y as error</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span> <span class="co"># Select geom point</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># Set theme</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span> <span class="co"># Add smoothing line</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(), <span class="co"># Remove grid</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(), <span class="co"># Remove grid</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_blank</span>(), <span class="co"># Remove grid</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> <span class="co"># Remove grid </span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of Trees"</span>, <span class="at">title =</span> <span class="st">"Error Rate v Number of Trees"</span>,</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Error Rate"</span>)  <span class="co"># Set labels</span></span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>g_1 <span class="co"># Print plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From this plot we can see that as the number of trees increase the error rate is at it’s lowest rate around 100 trees. Since we are using 1000 trees in our model I would say the model has converged to the optimal solution.</p>
+<section id="parameter-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="parameter-tuning"><strong>Parameter tuning</strong></h3>
+<p>Perhaps we can get some improvement from the model by tuning the parameters. The parameters we can tune for a bagging model are:</p>
+<ul>
+<li><p>Number of trees - The number of trees that we build for each model</p></li>
+<li><p>Node Size - The minimum size of the terminal nodes. Higher values lead to shallower trees while larger values lead to deeper trees.</p></li>
+</ul>
+<p>Lets try a variety of different node size and tree size parameters and see what the results are like. To do this we can loop through multiple different sets of parameters and calculate the out of bag error rate for each different combination. We can then select the set of parameters which lead to the lowest out of bag error.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>trees <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">500</span>,<span class="dv">1000</span>) <span class="co"># Create vector of possible tree sizes</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>nodesize <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">500</span>,<span class="dv">1000</span>) <span class="co"># Create vector of possible node sizes</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(trees, nodesize) <span class="co"># Expand grid to get data frame of parameter combinations</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(params) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"trees"</span>, <span class="st">"nodesize"</span>) <span class="co"># Name parameter data frame</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>res_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(params)) <span class="co"># Create vector to store accuracy results</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(params)){ <span class="co"># For each set of parameters</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">111111</span>) <span class="co"># Set seed for reproducability</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>  mod <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Group<span class="sc">~</span>. , <span class="co"># Set formula</span></span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data=</span>train_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(train_data)],<span class="co"># Set data</span></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">mtry =</span> <span class="dv">11</span>, <span class="co"># Set number of variables</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">importance =</span> <span class="cn">FALSE</span>,  <span class="co"># </span></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ntree =</span> params<span class="sc">$</span>trees[i], <span class="co"># Set number of trees</span></span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">nodesize =</span> params<span class="sc">$</span>nodesize[i]) <span class="co"># Set node size</span></span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>  res_vec[i] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> mod<span class="sc">$</span>err.rate[<span class="fu">nrow</span>(mod<span class="sc">$</span>err.rate),<span class="dv">1</span>] <span class="co"># Calculate out of bag accuracy</span></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>res_db <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(params, res_vec) <span class="co"># Join parameters and accuracy results</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res_db)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"oob_accuracy"</span> <span class="co"># Name accuracy results column</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>res_db <span class="co"># Print accuracy results column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   trees nodesize oob_accuracy
+1     10        1    0.6797153
+2     25        1    0.7420495
+3     50        1    0.7597173
+4    100        1    0.7632509
+5    200        1    0.7561837
+6    500        1    0.7667845
+7   1000        1    0.7561837
+8     10       10    0.7086331
+9     25       10    0.7455830
+10    50       10    0.7632509
+11   100       10    0.7526502
+12   200       10    0.7597173
+13   500       10    0.7703180
+14  1000       10    0.7632509
+15    10       25    0.6928571
+16    25       25    0.7279152
+17    50       25    0.7597173
+18   100       25    0.7526502
+19   200       25    0.7597173
+20   500       25    0.7561837
+21  1000       25    0.7597173
+22    10       50    0.7526882
+23    25       50    0.7526502
+24    50       50    0.7491166
+25   100       50    0.7597173
+26   200       50    0.7667845
+27   500       50    0.7667845
+28  1000       50    0.7667845
+29    10      100    0.7571429
+30    25      100    0.7632509
+31    50      100    0.7597173
+32   100      100    0.7667845
+33   200      100    0.7597173
+34   500      100    0.7597173
+35  1000      100    0.7597173
+36    10      200    0.7667845
+37    25      200    0.7561837
+38    50      200    0.7526502
+39   100      200    0.7420495
+40   200      200    0.7349823
+41   500      200    0.7385159
+42  1000      200    0.7526502
+43    10      500    0.7667845
+44    25      500    0.7561837
+45    50      500    0.7526502
+46   100      500    0.7420495
+47   200      500    0.7349823
+48   500      500    0.7385159
+49  1000      500    0.7526502
+50    10     1000    0.7667845
+51    25     1000    0.7561837
+52    50     1000    0.7526502
+53   100     1000    0.7420495
+54   200     1000    0.7349823
+55   500     1000    0.7385159
+56  1000     1000    0.7526502</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>res_db<span class="sc">$</span>trees <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(res_db<span class="sc">$</span>trees) <span class="co"># Convert tree number to factor for plotting</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>res_db<span class="sc">$</span>nodesize <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(res_db<span class="sc">$</span>nodesize) <span class="co"># Convert node size to factor for plotting</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>g_2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(res_db, <span class="fu">aes</span>(<span class="at">y =</span> trees, <span class="at">x =</span> nodesize, <span class="at">fill =</span> oob_accuracy)) <span class="sc">+</span> <span class="co"># set aesthetics</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> <span class="co"># Use geom_tile for heatmap</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># Set theme</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">"blue"</span>, <span class="co"># Choose low color</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mid =</span> <span class="st">"white"</span>, <span class="co"># Choose mid color</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">high =</span> <span class="st">"red"</span>, <span class="co"># Choose high color</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span><span class="fu">mean</span>(res_db<span class="sc">$</span>oob_accuracy), <span class="co"># Choose mid point</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">space =</span> <span class="st">"Lab"</span>, </span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span><span class="st">"grey"</span>, <span class="co"># Choose NA value</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="st">"colourbar"</span>, <span class="co"># Set color bar</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> <span class="st">"fill"</span>) <span class="sc">+</span> <span class="co"># Select aesthetics to apply</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Node Size"</span>, <span class="at">y =</span> <span class="st">"Number of Trees"</span>, <span class="at">fill =</span> <span class="st">"OOB Accuracy"</span>) <span class="co"># Set labels</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>g_2 <span class="co"># Generate plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>res_db[<span class="fu">which.max</span>(res_db<span class="sc">$</span>oob_accuracy),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   trees nodesize oob_accuracy
+13   500       10     0.770318</code></pre>
+</div>
+</div>
+<p>From this we can see that trees seem to perform best with the highest out of bag accuracy achieved at 500 trees and a minimum node size of 10.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>bag_mod_3 <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Group <span class="sc">~</span>., <span class="co"># Set tree formula</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> train_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(train_data)], <span class="co"># Set dataset</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">mtry =</span> <span class="dv">11</span>, <span class="co"># Set number of variables </span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">ntree =</span> <span class="dv">500</span>, <span class="co"># Set number of trees</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">nodesize =</span> <span class="dv">10</span>) <span class="co"># Set node size</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>bag_mod3_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(bag_mod_3, test_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(test_data)])</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>(bag_preds, test_data<span class="sc">$</span>Group)</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(t, <span class="at">positive =</span> <span class="st">"Demented"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+             
+bag_preds     Converted Demented Nondemented
+  Converted           5        0           0
+  Demented            2       23           2
+  Nondemented         4        3          32
+
+Overall Statistics
+                                        
+               Accuracy : 0.8451        
+                 95% CI : (0.7397, 0.92)
+    No Information Rate : 0.4789        
+    P-Value [Acc &gt; NIR] : 1.531e-10     
+                                        
+                  Kappa : 0.736         
+                                        
+ Mcnemar's Test P-Value : 0.1023        
+
+Statistics by Class:
+
+                     Class: Converted Class: Demented Class: Nondemented
+Sensitivity                   0.45455          0.8846             0.9412
+Specificity                   1.00000          0.9111             0.8108
+Pos Pred Value                1.00000          0.8519             0.8205
+Neg Pred Value                0.90909          0.9318             0.9375
+Prevalence                    0.15493          0.3662             0.4789
+Detection Rate                0.07042          0.3239             0.4507
+Detection Prevalence          0.07042          0.3803             0.5493
+Balanced Accuracy             0.72727          0.8979             0.8760</code></pre>
+</div>
+</div>
+<p>Our overall accuracy is 0.8451 which is actually the same a the original bagging model.</p>
+</section>
+</section>
+</section>
+<section id="xgboost" class="level1">
+<h1>XGBoost:</h1>
+<p>Next we prepare the data to perform an XGBoost:</p>
+<p>First: We create new dataframes (xgdata &amp; test_dataxg) that include the third column to the last column of the train_data data frame.</p>
+<p>Second: Convert the the “Group” column to a numeric type. (-1) subtracts one from each “Group” column. This is done to ensure the classes are in a binary format which is important for a binary classification problem.</p>
+<p>Third: Creates dummy variables for categorical columns in xgdata and test_dataxg using the <strong><code>fastDummies</code></strong> library. The original categorical columns are removed (<strong><code>remove_selected_columns = TRUE</code></strong>).</p>
+<p>Fourth: Creating a matrix used for XGBoost. Not selecting the first column since that’s the response variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>xgdata <span class="ot">&lt;-</span> train_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(train_data)] </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>test_dataxg <span class="ot">=</span> test_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(test_data)]</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>xgdata<span class="sc">$</span>Group <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(xgdata<span class="sc">$</span>Group) <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>test_dataxg<span class="sc">$</span>Group <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(test_dataxg<span class="sc">$</span>Group) <span class="sc">-</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastDummies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'fastDummies' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Thank you for using fastDummies!</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>To acknowledge our work, please cite the package:</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Kaplan, J. &amp; Schlegel, B. (2023). fastDummies: Fast Creation of Dummy (Binary) Columns and Rows from Categorical Variables. Version 1.7.1. URL: https://github.com/jacobkap/fastDummies, https://jacobkap.github.io/fastDummies/.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>xgdata <span class="ot">&lt;-</span> <span class="fu">dummy_cols</span>(xgdata, <span class="at">remove_selected_columns =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>test_dataxg <span class="ot">&lt;-</span> <span class="fu">dummy_cols</span>(test_dataxg, <span class="at">remove_selected_columns =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating Training matrix()</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> <span class="fu">as.matrix</span>(xgdata[, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(xgdata)]), <span class="at">label =</span> xgdata<span class="sc">$</span>Group)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Create test Matrix</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> <span class="fu">as.matrix</span>(test_dataxg[, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(test_dataxg)]), <span class="at">label =</span> test_data<span class="sc">$</span>Group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next we want to train our XGBoost model. For this XGBoost needs to have:</p>
+<ul>
+<li><p>Training data - The data we want to train our model on</p></li>
+<li><p>Number of Rounds - The number of rounds of training to use/Iterations/Trees</p></li>
+<li><p>Objective Function - This determines the output of XGBoost and is determined by the response variable we are using. Here as we have a multi-class response variable we choose the objective “multi:softmax”.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>bst_1 <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(<span class="at">data =</span> dtrain, </span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">nrounds =</span> <span class="dv">1000</span>, </span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">verbose =</span> <span class="dv">1</span>,</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">num_class =</span> <span class="dv">3</span>,</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">print_every_n =</span> <span class="dv">200</span>,</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">objective =</span> <span class="st">"multi:softmax"</span>,</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">eval_metric =</span> <span class="st">"auc"</span>,</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">eval_metric =</span> <span class="st">"merror"</span></span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>                 ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] train-auc:0.968908  train-merror:0.113074 
+[201]   train-auc:1.000000  train-merror:0.000000 
+[401]   train-auc:1.000000  train-merror:0.000000 
+[601]   train-auc:1.000000  train-merror:0.000000 
+[801]   train-auc:1.000000  train-merror:0.000000 
+[1000]  train-auc:1.000000  train-merror:0.000000 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>best_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(bst_1, dtest)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>(best_preds, <span class="fu">as.numeric</span>(test_data<span class="sc">$</span>Group)<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          
+best_preds  0  1  2
+         0  7  0  0
+         1  2 23  4
+         2  2  3 30
+
+Overall Statistics
+                                        
+               Accuracy : 0.8451        
+                 95% CI : (0.7397, 0.92)
+    No Information Rate : 0.4789        
+    P-Value [Acc &gt; NIR] : 1.531e-10     
+                                        
+                  Kappa : 0.7414        
+                                        
+ Mcnemar's Test P-Value : 0.2464        
+
+Statistics by Class:
+
+                     Class: 0 Class: 1 Class: 2
+Sensitivity           0.63636   0.8846   0.8824
+Specificity           1.00000   0.8667   0.8649
+Pos Pred Value        1.00000   0.7931   0.8571
+Neg Pred Value        0.93750   0.9286   0.8889
+Prevalence            0.15493   0.3662   0.4789
+Detection Rate        0.09859   0.3239   0.4225
+Detection Prevalence  0.09859   0.4085   0.4930
+Balanced Accuracy     0.81818   0.8756   0.8736</code></pre>
+</div>
+</div>
+<p>From this initial model we have an accuracy of 0.8451.</p>
+<section id="tuning-with-xgboost" class="level3">
+<h3 class="anchored" data-anchor-id="tuning-with-xgboost"><strong>Tuning with XGBoost</strong></h3>
+<p>Next I’m decided to tune max_depth_vals and min_child_weight.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>max_depth_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">15</span>) <span class="co"># Create vector of max depth values</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>min_child_weight <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">15</span>) <span class="co"># Create vector of min child values</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Expand grid of parameter values</span></span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>cv_params <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(max_depth_vals, min_child_weight)</span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(cv_params) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"max_depth"</span>, <span class="st">"min_child_weight"</span>)</span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create results vector</span></span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a>auc_vec <span class="ot">&lt;-</span> error_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(cv_params)) </span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through results</span></span>
+<span id="cb72-13"><a href="#cb72-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(cv_params)){</span>
+<span id="cb72-14"><a href="#cb72-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb72-15"><a href="#cb72-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb72-16"><a href="#cb72-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb72-17"><a href="#cb72-17" aria-hidden="true" tabindex="-1"></a>bst_tune <span class="ot">&lt;-</span> <span class="fu">xgb.cv</span>(<span class="at">data =</span> dtrain, <span class="co"># Set training data</span></span>
+<span id="cb72-18"><a href="#cb72-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nfold =</span> <span class="dv">5</span>, <span class="co"># Use 5 fold cross-validation</span></span>
+<span id="cb72-19"><a href="#cb72-19" aria-hidden="true" tabindex="-1"></a>                   <span class="at">eta =</span> <span class="fl">0.1</span>, <span class="co"># Set learning rate</span></span>
+<span id="cb72-20"><a href="#cb72-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">max.depth =</span> cv_params<span class="sc">$</span>max_depth[i], <span class="co"># Set max depth</span></span>
+<span id="cb72-21"><a href="#cb72-21" aria-hidden="true" tabindex="-1"></a>                   <span class="at">min_child_weight =</span> cv_params<span class="sc">$</span>min_child_weight[i], <span class="co"># Set minimum number of samples in node to split</span></span>
+<span id="cb72-22"><a href="#cb72-22" aria-hidden="true" tabindex="-1"></a>                   <span class="at">num_class =</span> <span class="dv">3</span>,</span>
+<span id="cb72-23"><a href="#cb72-23" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nrounds =</span> <span class="dv">1000</span>, <span class="co"># Set number of rounds</span></span>
+<span id="cb72-24"><a href="#cb72-24" aria-hidden="true" tabindex="-1"></a>                   <span class="at">early_stopping_rounds =</span> <span class="dv">500</span>, <span class="co"># Set number of rounds to stop at if there is no improvement</span></span>
+<span id="cb72-25"><a href="#cb72-25" aria-hidden="true" tabindex="-1"></a>                   <span class="at">verbose =</span> <span class="dv">1</span>, <span class="co"># 1 - Prints out fit</span></span>
+<span id="cb72-26"><a href="#cb72-26" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nthread =</span> <span class="dv">1</span>, <span class="co"># Set number of parallel threads</span></span>
+<span id="cb72-27"><a href="#cb72-27" aria-hidden="true" tabindex="-1"></a>                   <span class="at">print_every_n =</span> <span class="dv">100</span>, <span class="co"># Prints out result every 20th iteration</span></span>
+<span id="cb72-28"><a href="#cb72-28" aria-hidden="true" tabindex="-1"></a>                   <span class="at">objective =</span> <span class="st">"multi:softmax"</span>,</span>
+<span id="cb72-29"><a href="#cb72-29" aria-hidden="true" tabindex="-1"></a>                   <span class="at">eval_metric =</span> <span class="st">"auc"</span>,</span>
+<span id="cb72-30"><a href="#cb72-30" aria-hidden="true" tabindex="-1"></a>                   <span class="at">eval_metric =</span> <span class="st">"merror"</span>) <span class="co"># Set evaluation metric to use</span></span>
+<span id="cb72-31"><a href="#cb72-31" aria-hidden="true" tabindex="-1"></a>  auc_vec[i] <span class="ot">&lt;-</span> bst_tune<span class="sc">$</span>evaluation_log<span class="sc">$</span>test_auc_mean[bst_tune<span class="sc">$</span>best_ntreelimit]</span>
+<span id="cb72-32"><a href="#cb72-32" aria-hidden="true" tabindex="-1"></a>  error_vec[i] <span class="ot">&lt;-</span> bst_tune<span class="sc">$</span>evaluation_log<span class="sc">$</span>test_merror_mean[bst_tune<span class="sc">$</span>best_ntreelimit]</span>
+<span id="cb72-33"><a href="#cb72-33" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] train-auc:0.906950+0.008401 train-merror:0.193452+0.011819  test-auc:0.806682+0.065833  test-merror:0.264763+0.034867 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.999850+0.000263 train-merror:0.014136+0.008566  test-auc:0.860017+0.052568  test-merror:0.239949+0.031694 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.863916+0.049660  test-merror:0.236380+0.041270 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.864015+0.047185  test-merror:0.236503+0.034037 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859585+0.044992  test-merror:0.239951+0.039955 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859793+0.044499  test-merror:0.232808+0.040705 
+Stopping. Best iteration:
+[38]    train-auc:0.986356+0.005257 train-merror:0.106020+0.007567  test-auc:0.842574+0.054101  test-merror:0.222336+0.030698
+
+[1] train-auc:0.963585+0.005644 train-merror:0.117497+0.007777  test-auc:0.808346+0.056299  test-merror:0.268460+0.036564 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.848944+0.043636  test-merror:0.254174+0.037486 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.854545+0.044454  test-merror:0.250665+0.047654 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.857047+0.045619  test-merror:0.257562+0.057309 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859627+0.045314  test-merror:0.257562+0.057309 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859859+0.046015  test-merror:0.250603+0.040169 
+Stopping. Best iteration:
+[64]    train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.843186+0.045206  test-merror:0.243460+0.045622
+
+[1] train-auc:0.978971+0.002990 train-merror:0.083054+0.005382  test-auc:0.816388+0.049069  test-merror:0.268767+0.025529 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858149+0.049491  test-merror:0.264828+0.044194 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859815+0.049832  test-merror:0.257871+0.049797 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.860075+0.050344  test-merror:0.261442+0.048446 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859212+0.051502  test-merror:0.257871+0.048500 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859431+0.051996  test-merror:0.261380+0.042696 
+Stopping. Best iteration:
+[5] train-auc:0.993802+0.002936 train-merror:0.051242+0.014396  test-auc:0.833624+0.044201  test-merror:0.247401+0.033894
+
+[1] train-auc:0.980997+0.003233 train-merror:0.075978+0.003438  test-auc:0.817778+0.049016  test-merror:0.265318+0.027735 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859644+0.045736  test-merror:0.261440+0.029516 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.860877+0.048349  test-merror:0.258178+0.036052 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.862174+0.048993  test-merror:0.268583+0.032240 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.862995+0.049378  test-merror:0.258178+0.036052 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.863091+0.048323  test-merror:0.261626+0.036747 
+Stopping. Best iteration:
+[2] train-auc:0.988907+0.003966 train-merror:0.060076+0.006046  test-auc:0.821993+0.050011  test-merror:0.243953+0.040363
+
+[1] train-auc:0.980997+0.003233 train-merror:0.075978+0.003438  test-auc:0.817778+0.049016  test-merror:0.265318+0.027735 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.861086+0.044458  test-merror:0.264828+0.044194 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.863323+0.047070  test-merror:0.265074+0.038679 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.862896+0.047656  test-merror:0.265074+0.038679 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.861955+0.047274  test-merror:0.261566+0.045291 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.862713+0.046223  test-merror:0.261442+0.048446 
+Stopping. Best iteration:
+[2] train-auc:0.988907+0.003966 train-merror:0.060076+0.006046  test-auc:0.821993+0.050011  test-merror:0.243953+0.040363
+
+[1] train-auc:0.902603+0.009864 train-merror:0.210247+0.008144  test-auc:0.815914+0.063765  test-merror:0.264763+0.034867 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.998731+0.000747 train-merror:0.028276+0.009107  test-auc:0.859233+0.058410  test-merror:0.250789+0.034821 
+[201]   train-auc:1.000000+0.000000 train-merror:0.003532+0.003309  test-auc:0.856830+0.051069  test-merror:0.257808+0.038014 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.854702+0.050454  test-merror:0.246910+0.055030 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.853776+0.052502  test-merror:0.246973+0.059580 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.854838+0.052258  test-merror:0.236505+0.048687 
+Stopping. Best iteration:
+[29]    train-auc:0.970745+0.008577 train-merror:0.147539+0.016021  test-auc:0.838639+0.041460  test-merror:0.232867+0.027146
+
+[1] train-auc:0.948916+0.005290 train-merror:0.154635+0.013882  test-auc:0.816467+0.039274  test-merror:0.279235+0.028720 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.999983+0.000021 train-merror:0.003536+0.001768  test-auc:0.856693+0.048606  test-merror:0.257685+0.044569 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.854928+0.050638  test-merror:0.257746+0.032307 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.857700+0.052659  test-merror:0.268520+0.022526 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858297+0.053479  test-merror:0.268460+0.032891 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.856772+0.053992  test-merror:0.268397+0.028371 
+Stopping. Best iteration:
+[44]    train-auc:0.998672+0.000803 train-merror:0.030915+0.010036  test-auc:0.853031+0.044231  test-merror:0.243583+0.027741
+
+[1] train-auc:0.954612+0.003544 train-merror:0.144916+0.015762  test-auc:0.809110+0.053877  test-merror:0.286254+0.051951 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:1.000000+0.000000 train-merror:0.002647+0.002161  test-auc:0.858866+0.049536  test-merror:0.261194+0.039769 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.857046+0.051161  test-merror:0.261380+0.039596 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.857568+0.052834  test-merror:0.257931+0.033915 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858345+0.054778  test-merror:0.254421+0.023525 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858791+0.056095  test-merror:0.261440+0.029516 
+Stopping. Best iteration:
+[79]    train-auc:0.999964+0.000018 train-merror:0.004417+0.000016  test-auc:0.857272+0.049584  test-merror:0.250665+0.037122
+
+[1] train-auc:0.954972+0.003853 train-merror:0.144916+0.015762  test-auc:0.809087+0.053859  test-merror:0.286254+0.051951 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:1.000000+0.000000 train-merror:0.003536+0.001768  test-auc:0.857271+0.052479  test-merror:0.247587+0.029164 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859423+0.052640  test-merror:0.261438+0.011590 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858930+0.053582  test-merror:0.265072+0.019633 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858924+0.052376  test-merror:0.257992+0.023934 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859115+0.054693  test-merror:0.254483+0.030906 
+Stopping. Best iteration:
+[98]    train-auc:1.000000+0.000000 train-merror:0.003536+0.001768  test-auc:0.855629+0.052616  test-merror:0.244015+0.027510
+
+[1] train-auc:0.954972+0.003853 train-merror:0.144916+0.015762  test-auc:0.809087+0.053859  test-merror:0.286254+0.051951 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:1.000000+0.000000 train-merror:0.003536+0.001768  test-auc:0.857271+0.052479  test-merror:0.247587+0.029164 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859423+0.052640  test-merror:0.261438+0.011590 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858930+0.053582  test-merror:0.265072+0.019633 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858924+0.052376  test-merror:0.257992+0.023934 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859115+0.054693  test-merror:0.254483+0.030906 
+Stopping. Best iteration:
+[98]    train-auc:1.000000+0.000000 train-merror:0.003536+0.001768  test-auc:0.855629+0.052616  test-merror:0.244015+0.027510
+
+[1] train-auc:0.896249+0.008841 train-merror:0.220827+0.010385  test-auc:0.815024+0.069283  test-merror:0.250477+0.045510 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.994863+0.001625 train-merror:0.052131+0.009875  test-auc:0.861950+0.054136  test-merror:0.243771+0.045752 
+[201]   train-auc:0.999572+0.000224 train-merror:0.010608+0.006008  test-auc:0.857967+0.047010  test-merror:0.247094+0.039514 
+[301]   train-auc:0.999941+0.000056 train-merror:0.004421+0.002799  test-auc:0.860792+0.050328  test-merror:0.239891+0.050324 
+[401]   train-auc:1.000000+0.000000 train-merror:0.002651+0.002165  test-auc:0.859780+0.050392  test-merror:0.240076+0.048890 
+[501]   train-auc:1.000000+0.000000 train-merror:0.001770+0.002168  test-auc:0.862104+0.048078  test-merror:0.233057+0.045125 
+Stopping. Best iteration:
+[11]    train-auc:0.934418+0.007826 train-merror:0.215525+0.013164  test-auc:0.809665+0.054798  test-merror:0.229172+0.038370
+
+[1] train-auc:0.925087+0.003498 train-merror:0.192567+0.010455  test-auc:0.815864+0.065500  test-merror:0.247278+0.028647 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.998917+0.000561 train-merror:0.024736+0.009496  test-auc:0.860717+0.053004  test-merror:0.240381+0.019014 
+[201]   train-auc:0.999941+0.000043 train-merror:0.006187+0.002174  test-auc:0.856879+0.052452  test-merror:0.240195+0.019939 
+[301]   train-auc:0.999996+0.000009 train-merror:0.004417+0.000016  test-auc:0.855140+0.055649  test-merror:0.240195+0.011936 
+[401]   train-auc:1.000000+0.000000 train-merror:0.001770+0.002168  test-auc:0.853703+0.055084  test-merror:0.250786+0.018891 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.854527+0.056390  test-merror:0.247338+0.015216 
+Stopping. Best iteration:
+[23]    train-auc:0.982439+0.004284 train-merror:0.120168+0.017709  test-auc:0.841786+0.051839  test-merror:0.225912+0.035887
+
+[1] train-auc:0.925087+0.003498 train-merror:0.192567+0.010455  test-auc:0.815864+0.065500  test-merror:0.247278+0.028647 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.999096+0.000387 train-merror:0.020307+0.005954  test-auc:0.861888+0.056254  test-merror:0.247403+0.038652 
+[201]   train-auc:0.999958+0.000037 train-merror:0.007068+0.002166  test-auc:0.858088+0.054067  test-merror:0.247401+0.025271 
+[301]   train-auc:0.999996+0.000009 train-merror:0.004417+0.000016  test-auc:0.859451+0.056837  test-merror:0.250912+0.032222 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000889+0.001778  test-auc:0.856374+0.057030  test-merror:0.250849+0.027633 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000889+0.001778  test-auc:0.857893+0.055719  test-merror:0.247278+0.023781 
+Stopping. Best iteration:
+[47]    train-auc:0.994146+0.001707 train-merror:0.061846+0.011558  test-auc:0.863863+0.052974  test-merror:0.222589+0.039168
+
+[1] train-auc:0.925087+0.003498 train-merror:0.192567+0.010455  test-auc:0.815864+0.065500  test-merror:0.247278+0.028647 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.999029+0.000419 train-merror:0.021196+0.008085  test-auc:0.859176+0.053592  test-merror:0.243769+0.029541 
+[201]   train-auc:0.999941+0.000033 train-merror:0.006187+0.002174  test-auc:0.859736+0.056443  test-merror:0.240321+0.032887 
+[301]   train-auc:0.999990+0.000021 train-merror:0.004417+0.000016  test-auc:0.858430+0.059397  test-merror:0.250849+0.027633 
+[401]   train-auc:1.000000+0.000000 train-merror:0.001770+0.002168  test-auc:0.856554+0.060513  test-merror:0.254421+0.028434 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000889+0.001778  test-auc:0.857257+0.059803  test-merror:0.247278+0.028647 
+Stopping. Best iteration:
+[49]    train-auc:0.994347+0.001789 train-merror:0.057425+0.011857  test-auc:0.861377+0.051450  test-merror:0.222589+0.039168
+
+[1] train-auc:0.925087+0.003498 train-merror:0.192567+0.010455  test-auc:0.815864+0.065500  test-merror:0.247278+0.028647 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.999029+0.000419 train-merror:0.021196+0.008085  test-auc:0.859176+0.053592  test-merror:0.243769+0.029541 
+[201]   train-auc:0.999941+0.000033 train-merror:0.006187+0.002174  test-auc:0.859736+0.056443  test-merror:0.240321+0.032887 
+[301]   train-auc:0.999990+0.000021 train-merror:0.004417+0.000016  test-auc:0.858430+0.059397  test-merror:0.250849+0.027633 
+[401]   train-auc:1.000000+0.000000 train-merror:0.001770+0.002168  test-auc:0.856554+0.060513  test-merror:0.254421+0.028434 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000889+0.001778  test-auc:0.857257+0.059803  test-merror:0.247278+0.028647 
+Stopping. Best iteration:
+[49]    train-auc:0.994347+0.001789 train-merror:0.057425+0.011857  test-auc:0.861377+0.051450  test-merror:0.222589+0.039168
+
+[1] train-auc:0.891560+0.006989 train-merror:0.222582+0.011068  test-auc:0.803130+0.086908  test-merror:0.264763+0.041544 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.989242+0.002515 train-merror:0.079518+0.008492  test-auc:0.851876+0.051688  test-merror:0.243953+0.024674 
+[201]   train-auc:0.997143+0.000709 train-merror:0.037114+0.008249  test-auc:0.850483+0.049760  test-merror:0.247524+0.026515 
+[301]   train-auc:0.998881+0.000329 train-merror:0.022097+0.007428  test-auc:0.848727+0.052812  test-merror:0.247278+0.023781 
+[401]   train-auc:0.999541+0.000143 train-merror:0.015017+0.003525  test-auc:0.850630+0.052096  test-merror:0.254112+0.031605 
+[501]   train-auc:0.999808+0.000066 train-merror:0.009731+0.005178  test-auc:0.850834+0.052551  test-merror:0.250540+0.032853 
+Stopping. Best iteration:
+[59]    train-auc:0.978210+0.004224 train-merror:0.120152+0.006679  test-auc:0.850534+0.054983  test-merror:0.219017+0.033679
+
+[1] train-auc:0.905603+0.004837 train-merror:0.218168+0.010061  test-auc:0.798658+0.086985  test-merror:0.271906+0.023899 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.993818+0.001789 train-merror:0.059199+0.009566  test-auc:0.854217+0.048474  test-merror:0.247215+0.023261 
+[201]   train-auc:0.998609+0.000552 train-merror:0.029157+0.010329  test-auc:0.855314+0.046116  test-merror:0.240135+0.027032 
+[301]   train-auc:0.999564+0.000155 train-merror:0.015898+0.004485  test-auc:0.854091+0.049839  test-merror:0.236563+0.024161 
+[401]   train-auc:0.999838+0.000096 train-merror:0.012374+0.003328  test-auc:0.856466+0.051957  test-merror:0.240012+0.030039 
+[501]   train-auc:0.999906+0.000053 train-merror:0.008842+0.004854  test-auc:0.855080+0.051946  test-merror:0.240135+0.027032 
+Stopping. Best iteration:
+[38]    train-auc:0.979321+0.004278 train-merror:0.121934+0.010593  test-auc:0.850871+0.047235  test-merror:0.218953+0.025260
+
+[1] train-auc:0.905603+0.004837 train-merror:0.218168+0.010061  test-auc:0.798658+0.086985  test-merror:0.271906+0.023899 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.993931+0.001682 train-merror:0.059187+0.009506  test-auc:0.855021+0.046267  test-merror:0.240256+0.013374 
+[201]   train-auc:0.998526+0.000434 train-merror:0.029161+0.007741  test-auc:0.856102+0.046520  test-merror:0.240135+0.027032 
+[301]   train-auc:0.999461+0.000178 train-merror:0.016783+0.005142  test-auc:0.855896+0.048766  test-merror:0.240072+0.026559 
+[401]   train-auc:0.999823+0.000076 train-merror:0.012374+0.003328  test-auc:0.857437+0.051232  test-merror:0.236501+0.023620 
+[501]   train-auc:0.999897+0.000055 train-merror:0.009731+0.005178  test-auc:0.855413+0.052928  test-merror:0.250661+0.020568 
+Stopping. Best iteration:
+[41]    train-auc:0.981453+0.004464 train-merror:0.109564+0.009690  test-auc:0.851618+0.047998  test-merror:0.218892+0.029074
+
+[1] train-auc:0.905603+0.004837 train-merror:0.218168+0.010061  test-auc:0.798658+0.086985  test-merror:0.271906+0.023899 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.993931+0.001682 train-merror:0.059187+0.009506  test-auc:0.855021+0.046267  test-merror:0.240256+0.013374 
+[201]   train-auc:0.998526+0.000434 train-merror:0.029161+0.007741  test-auc:0.856102+0.046520  test-merror:0.240135+0.027032 
+[301]   train-auc:0.999461+0.000178 train-merror:0.016783+0.005142  test-auc:0.855896+0.048766  test-merror:0.240072+0.026559 
+[401]   train-auc:0.999823+0.000076 train-merror:0.012374+0.003328  test-auc:0.857437+0.051232  test-merror:0.236501+0.023620 
+[501]   train-auc:0.999897+0.000055 train-merror:0.009731+0.005178  test-auc:0.855413+0.052928  test-merror:0.250661+0.020568 
+Stopping. Best iteration:
+[41]    train-auc:0.981453+0.004464 train-merror:0.109564+0.009690  test-auc:0.851618+0.047998  test-merror:0.218892+0.029074
+
+[1] train-auc:0.905603+0.004837 train-merror:0.218168+0.010061  test-auc:0.798658+0.086985  test-merror:0.271906+0.023899 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.993931+0.001682 train-merror:0.059187+0.009506  test-auc:0.855021+0.046267  test-merror:0.240256+0.013374 
+[201]   train-auc:0.998526+0.000434 train-merror:0.029161+0.007741  test-auc:0.856102+0.046520  test-merror:0.240135+0.027032 
+[301]   train-auc:0.999461+0.000178 train-merror:0.016783+0.005142  test-auc:0.855896+0.048766  test-merror:0.240072+0.026559 
+[401]   train-auc:0.999823+0.000076 train-merror:0.012374+0.003328  test-auc:0.857437+0.051232  test-merror:0.236501+0.023620 
+[501]   train-auc:0.999897+0.000055 train-merror:0.009731+0.005178  test-auc:0.855413+0.052928  test-merror:0.250661+0.020568 
+Stopping. Best iteration:
+[41]    train-auc:0.981453+0.004464 train-merror:0.109564+0.009690  test-auc:0.851618+0.047998  test-merror:0.218892+0.029074
+
+[1] train-auc:0.884966+0.010975 train-merror:0.229646+0.011796  test-auc:0.812809+0.065412  test-merror:0.239763+0.043622 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.975394+0.005103 train-merror:0.120172+0.010575  test-auc:0.849611+0.050559  test-merror:0.240381+0.015296 
+[201]   train-auc:0.987689+0.002918 train-merror:0.078633+0.007178  test-auc:0.853230+0.050754  test-merror:0.229790+0.012826 
+[301]   train-auc:0.992178+0.002142 train-merror:0.061846+0.009328  test-auc:0.855007+0.050295  test-merror:0.222524+0.012064 
+[401]   train-auc:0.994047+0.001681 train-merror:0.056544+0.010254  test-auc:0.856478+0.051436  test-merror:0.225972+0.017976 
+[501]   train-auc:0.995223+0.001377 train-merror:0.050365+0.010720  test-auc:0.853522+0.053317  test-merror:0.232992+0.025813 
+[601]   train-auc:0.996122+0.001188 train-merror:0.044178+0.006298  test-auc:0.851871+0.052292  test-merror:0.240010+0.023410 
+[701]   train-auc:0.996638+0.001127 train-merror:0.038872+0.005862  test-auc:0.851923+0.054744  test-merror:0.240010+0.023410 
+Stopping. Best iteration:
+[254]   train-auc:0.990646+0.002387 train-merror:0.065390+0.009963  test-auc:0.855878+0.049442  test-merror:0.215504+0.004556
+
+[1] train-auc:0.895320+0.011443 train-merror:0.229646+0.011796  test-auc:0.829191+0.055004  test-merror:0.239763+0.043622 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.978906+0.005371 train-merror:0.112227+0.012059  test-auc:0.854206+0.050326  test-merror:0.229790+0.030493 
+[201]   train-auc:0.989302+0.003253 train-merror:0.074220+0.008688  test-auc:0.859057+0.051217  test-merror:0.236870+0.015776 
+[301]   train-auc:0.993083+0.002064 train-merror:0.056544+0.008608  test-auc:0.859532+0.053521  test-merror:0.236684+0.012660 
+[401]   train-auc:0.994455+0.001627 train-merror:0.053012+0.010495  test-auc:0.859376+0.052249  test-merror:0.243827+0.017306 
+[501]   train-auc:0.995539+0.001533 train-merror:0.047710+0.010249  test-auc:0.858761+0.051229  test-merror:0.240133+0.022256 
+[601]   train-auc:0.996201+0.001313 train-merror:0.041523+0.006622  test-auc:0.857587+0.054070  test-merror:0.243767+0.019776 
+[701]   train-auc:0.996781+0.001115 train-merror:0.036221+0.007589  test-auc:0.856680+0.054215  test-merror:0.247276+0.018170 
+Stopping. Best iteration:
+[290]   train-auc:0.992761+0.002115 train-merror:0.057429+0.010122  test-auc:0.860689+0.052901  test-merror:0.219076+0.007942
+
+[1] train-auc:0.895320+0.011443 train-merror:0.229646+0.011796  test-auc:0.829191+0.055004  test-merror:0.239763+0.043622 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.978873+0.005334 train-merror:0.112227+0.012059  test-auc:0.854755+0.050491  test-merror:0.229790+0.030493 
+[201]   train-auc:0.989267+0.003202 train-merror:0.073339+0.008798  test-auc:0.859057+0.051217  test-merror:0.236870+0.015776 
+[301]   train-auc:0.993017+0.001968 train-merror:0.056544+0.008608  test-auc:0.859117+0.053364  test-merror:0.240256+0.007163 
+[401]   train-auc:0.994474+0.001652 train-merror:0.053893+0.010989  test-auc:0.859893+0.052432  test-merror:0.243827+0.017306 
+[501]   train-auc:0.995519+0.001509 train-merror:0.046829+0.009555  test-auc:0.859448+0.051454  test-merror:0.240133+0.022256 
+[601]   train-auc:0.996179+0.001287 train-merror:0.041523+0.006622  test-auc:0.858070+0.054216  test-merror:0.243767+0.019776 
+[701]   train-auc:0.996789+0.001124 train-merror:0.035340+0.006256  test-auc:0.857095+0.054353  test-merror:0.247276+0.018170 
+Stopping. Best iteration:
+[290]   train-auc:0.992718+0.002052 train-merror:0.057429+0.010122  test-auc:0.860275+0.052751  test-merror:0.222647+0.008937
+
+[1] train-auc:0.895320+0.011443 train-merror:0.229646+0.011796  test-auc:0.829191+0.055004  test-merror:0.239763+0.043622 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.978873+0.005334 train-merror:0.112227+0.012059  test-auc:0.854755+0.050491  test-merror:0.229790+0.030493 
+[201]   train-auc:0.989267+0.003202 train-merror:0.073339+0.008798  test-auc:0.859057+0.051217  test-merror:0.236870+0.015776 
+[301]   train-auc:0.993017+0.001968 train-merror:0.056544+0.008608  test-auc:0.859117+0.053364  test-merror:0.240256+0.007163 
+[401]   train-auc:0.994474+0.001652 train-merror:0.053893+0.010989  test-auc:0.859893+0.052432  test-merror:0.243827+0.017306 
+[501]   train-auc:0.995519+0.001509 train-merror:0.046829+0.009555  test-auc:0.859448+0.051454  test-merror:0.240133+0.022256 
+[601]   train-auc:0.996179+0.001287 train-merror:0.041523+0.006622  test-auc:0.858070+0.054216  test-merror:0.243767+0.019776 
+[701]   train-auc:0.996789+0.001124 train-merror:0.035340+0.006256  test-auc:0.857095+0.054353  test-merror:0.247276+0.018170 
+Stopping. Best iteration:
+[290]   train-auc:0.992718+0.002052 train-merror:0.057429+0.010122  test-auc:0.860275+0.052751  test-merror:0.222647+0.008937
+
+[1] train-auc:0.895320+0.011443 train-merror:0.229646+0.011796  test-auc:0.829191+0.055004  test-merror:0.239763+0.043622 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.978873+0.005334 train-merror:0.112227+0.012059  test-auc:0.854755+0.050491  test-merror:0.229790+0.030493 
+[201]   train-auc:0.989267+0.003202 train-merror:0.073339+0.008798  test-auc:0.859057+0.051217  test-merror:0.236870+0.015776 
+[301]   train-auc:0.993017+0.001968 train-merror:0.056544+0.008608  test-auc:0.859117+0.053364  test-merror:0.240256+0.007163 
+[401]   train-auc:0.994474+0.001652 train-merror:0.053893+0.010989  test-auc:0.859893+0.052432  test-merror:0.243827+0.017306 
+[501]   train-auc:0.995519+0.001509 train-merror:0.046829+0.009555  test-auc:0.859448+0.051454  test-merror:0.240133+0.022256 
+[601]   train-auc:0.996179+0.001287 train-merror:0.041523+0.006622  test-auc:0.858070+0.054216  test-merror:0.243767+0.019776 
+[701]   train-auc:0.996789+0.001124 train-merror:0.035340+0.006256  test-auc:0.857095+0.054353  test-merror:0.247276+0.018170 
+Stopping. Best iteration:
+[290]   train-auc:0.992718+0.002052 train-merror:0.057429+0.010122  test-auc:0.860275+0.052751  test-merror:0.222647+0.008937
+
+[1] train-auc:0.872393+0.012034 train-merror:0.233178+0.011229  test-auc:0.812227+0.053025  test-merror:0.232620+0.044280 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.947816+0.007432 train-merror:0.168747+0.008913  test-auc:0.844778+0.052464  test-merror:0.243767+0.016233 
+[201]   train-auc:0.956486+0.007436 train-merror:0.146654+0.006709  test-auc:0.846063+0.045704  test-merror:0.250907+0.023640 
+[301]   train-auc:0.961810+0.007154 train-merror:0.129863+0.006068  test-auc:0.845700+0.043937  test-merror:0.247213+0.028408 
+[401]   train-auc:0.966193+0.007209 train-merror:0.123692+0.009486  test-auc:0.847449+0.042006  test-merror:0.240070+0.029047 
+[501]   train-auc:0.969614+0.006923 train-merror:0.121041+0.010855  test-auc:0.848206+0.045001  test-merror:0.236499+0.026387 
+Stopping. Best iteration:
+[1] train-auc:0.872393+0.012034 train-merror:0.233178+0.011229  test-auc:0.812227+0.053025  test-merror:0.232620+0.044280
+
+[1] train-auc:0.874610+0.015081 train-merror:0.233178+0.011229  test-auc:0.817358+0.053156  test-merror:0.232620+0.044280 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.949043+0.007289 train-merror:0.167866+0.009215  test-auc:0.847768+0.049179  test-merror:0.240195+0.011936 
+[201]   train-auc:0.957260+0.007410 train-merror:0.146654+0.006709  test-auc:0.846931+0.045011  test-merror:0.236622+0.027629 
+[301]   train-auc:0.962364+0.007404 train-merror:0.127224+0.008781  test-auc:0.848501+0.043502  test-merror:0.250784+0.024957 
+[401]   train-auc:0.966769+0.007221 train-merror:0.120168+0.012241  test-auc:0.850819+0.042838  test-merror:0.232990+0.023631 
+[501]   train-auc:0.970138+0.007141 train-merror:0.120160+0.011164  test-auc:0.849988+0.044443  test-merror:0.236499+0.021004 
+[601]   train-auc:0.972332+0.007023 train-merror:0.117497+0.009995  test-auc:0.850330+0.046818  test-merror:0.236315+0.036553 
+[701]   train-auc:0.974086+0.006457 train-merror:0.106008+0.010092  test-auc:0.848272+0.048029  test-merror:0.246841+0.044442 
+[801]   train-auc:0.975651+0.006128 train-merror:0.104246+0.009987  test-auc:0.845716+0.047795  test-merror:0.243332+0.040787 
+[901]   train-auc:0.976842+0.005860 train-merror:0.101603+0.012901  test-auc:0.845279+0.048521  test-merror:0.243332+0.040787 
+[1000]  train-auc:0.977812+0.005763 train-merror:0.098956+0.011517  test-auc:0.845438+0.048782  test-merror:0.246841+0.049853 
+[1] train-auc:0.874610+0.015081 train-merror:0.233178+0.011229  test-auc:0.817358+0.053156  test-merror:0.232620+0.044280 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.949043+0.007289 train-merror:0.167866+0.009215  test-auc:0.847768+0.049179  test-merror:0.240195+0.011936 
+[201]   train-auc:0.957260+0.007410 train-merror:0.146654+0.006709  test-auc:0.846931+0.045011  test-merror:0.236622+0.027629 
+[301]   train-auc:0.962364+0.007404 train-merror:0.127224+0.008781  test-auc:0.848501+0.043502  test-merror:0.250784+0.024957 
+[401]   train-auc:0.966769+0.007221 train-merror:0.120168+0.012241  test-auc:0.850819+0.042838  test-merror:0.232990+0.023631 
+[501]   train-auc:0.970138+0.007141 train-merror:0.120160+0.011164  test-auc:0.849988+0.044443  test-merror:0.236499+0.021004 
+[601]   train-auc:0.972332+0.007023 train-merror:0.117497+0.009995  test-auc:0.850330+0.046818  test-merror:0.236315+0.036553 
+[701]   train-auc:0.974086+0.006457 train-merror:0.106008+0.010092  test-auc:0.848272+0.048029  test-merror:0.246841+0.044442 
+[801]   train-auc:0.975651+0.006128 train-merror:0.104246+0.009987  test-auc:0.845716+0.047795  test-merror:0.243332+0.040787 
+[901]   train-auc:0.976842+0.005860 train-merror:0.101603+0.012901  test-auc:0.845279+0.048521  test-merror:0.243332+0.040787 
+[1000]  train-auc:0.977812+0.005763 train-merror:0.098956+0.011517  test-auc:0.845438+0.048782  test-merror:0.246841+0.049853 
+[1] train-auc:0.874610+0.015081 train-merror:0.233178+0.011229  test-auc:0.817358+0.053156  test-merror:0.232620+0.044280 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.949043+0.007289 train-merror:0.167866+0.009215  test-auc:0.847768+0.049179  test-merror:0.240195+0.011936 
+[201]   train-auc:0.957260+0.007410 train-merror:0.146654+0.006709  test-auc:0.846931+0.045011  test-merror:0.236622+0.027629 
+[301]   train-auc:0.962364+0.007404 train-merror:0.127224+0.008781  test-auc:0.848501+0.043502  test-merror:0.250784+0.024957 
+[401]   train-auc:0.966769+0.007221 train-merror:0.120168+0.012241  test-auc:0.850819+0.042838  test-merror:0.232990+0.023631 
+[501]   train-auc:0.970138+0.007141 train-merror:0.120160+0.011164  test-auc:0.849988+0.044443  test-merror:0.236499+0.021004 
+[601]   train-auc:0.972332+0.007023 train-merror:0.117497+0.009995  test-auc:0.850330+0.046818  test-merror:0.236315+0.036553 
+[701]   train-auc:0.974086+0.006457 train-merror:0.106008+0.010092  test-auc:0.848272+0.048029  test-merror:0.246841+0.044442 
+[801]   train-auc:0.975651+0.006128 train-merror:0.104246+0.009987  test-auc:0.845716+0.047795  test-merror:0.243332+0.040787 
+[901]   train-auc:0.976842+0.005860 train-merror:0.101603+0.012901  test-auc:0.845279+0.048521  test-merror:0.243332+0.040787 
+[1000]  train-auc:0.977812+0.005763 train-merror:0.098956+0.011517  test-auc:0.845438+0.048782  test-merror:0.246841+0.049853 
+[1] train-auc:0.874610+0.015081 train-merror:0.233178+0.011229  test-auc:0.817358+0.053156  test-merror:0.232620+0.044280 
+Multiple eval metrics are present. Will use test_merror for early stopping.
+Will train until test_merror hasn't improved in 500 rounds.
+
+[101]   train-auc:0.949043+0.007289 train-merror:0.167866+0.009215  test-auc:0.847768+0.049179  test-merror:0.240195+0.011936 
+[201]   train-auc:0.957260+0.007410 train-merror:0.146654+0.006709  test-auc:0.846931+0.045011  test-merror:0.236622+0.027629 
+[301]   train-auc:0.962364+0.007404 train-merror:0.127224+0.008781  test-auc:0.848501+0.043502  test-merror:0.250784+0.024957 
+[401]   train-auc:0.966769+0.007221 train-merror:0.120168+0.012241  test-auc:0.850819+0.042838  test-merror:0.232990+0.023631 
+[501]   train-auc:0.970138+0.007141 train-merror:0.120160+0.011164  test-auc:0.849988+0.044443  test-merror:0.236499+0.021004 
+[601]   train-auc:0.972332+0.007023 train-merror:0.117497+0.009995  test-auc:0.850330+0.046818  test-merror:0.236315+0.036553 
+[701]   train-auc:0.974086+0.006457 train-merror:0.106008+0.010092  test-auc:0.848272+0.048029  test-merror:0.246841+0.044442 
+[801]   train-auc:0.975651+0.006128 train-merror:0.104246+0.009987  test-auc:0.845716+0.047795  test-merror:0.243332+0.040787 
+[901]   train-auc:0.976842+0.005860 train-merror:0.101603+0.012901  test-auc:0.845279+0.048521  test-merror:0.243332+0.040787 
+[1000]  train-auc:0.977812+0.005763 train-merror:0.098956+0.011517  test-auc:0.845438+0.048782  test-merror:0.246841+0.049853 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join results in dataset</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>res_db <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(cv_params, auc_vec, error_vec)</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>res_db<span class="sc">$</span>max_depth <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(res_db<span class="sc">$</span>max_depth) <span class="co"># Convert tree number to factor for plotting</span></span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>res_db<span class="sc">$</span>min_child_weight <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(res_db<span class="sc">$</span>min_child_weight) <span class="co"># Convert node size to factor for plotting</span></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print AUC heatmap</span></span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>g_2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(res_db, <span class="fu">aes</span>(<span class="at">y =</span> max_depth, <span class="at">x =</span> min_child_weight, <span class="at">fill =</span> auc_vec)) <span class="sc">+</span> <span class="co"># set aesthetics</span></span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> <span class="co"># Use geom_tile for heatmap</span></span>
+<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># Set theme</span></span>
+<span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">"blue"</span>, <span class="co"># Choose low color</span></span>
+<span id="cb74-11"><a href="#cb74-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">mid =</span> <span class="st">"white"</span>, <span class="co"># Choose mid color</span></span>
+<span id="cb74-12"><a href="#cb74-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">high =</span> <span class="st">"red"</span>, <span class="co"># Choose high color</span></span>
+<span id="cb74-13"><a href="#cb74-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span><span class="fu">mean</span>(res_db<span class="sc">$</span>auc), <span class="co"># Choose mid point</span></span>
+<span id="cb74-14"><a href="#cb74-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">space =</span> <span class="st">"Lab"</span>, </span>
+<span id="cb74-15"><a href="#cb74-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span><span class="st">"grey"</span>, <span class="co"># Choose NA value</span></span>
+<span id="cb74-16"><a href="#cb74-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="st">"colourbar"</span>, <span class="co"># Set color bar</span></span>
+<span id="cb74-17"><a href="#cb74-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> <span class="st">"fill"</span>) <span class="sc">+</span> <span class="co"># Select aesthetics to apply</span></span>
+<span id="cb74-18"><a href="#cb74-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Minimum Child Weight"</span>, <span class="at">y =</span> <span class="st">"Max Depth"</span>, <span class="at">fill =</span> <span class="st">"AUC"</span>) <span class="co"># Set labels</span></span>
+<span id="cb74-19"><a href="#cb74-19" aria-hidden="true" tabindex="-1"></a>g_2 <span class="co"># Generate plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print error heatmap</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>g_3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(res_db, <span class="fu">aes</span>(<span class="at">y =</span> max_depth, <span class="at">x =</span> min_child_weight, <span class="at">fill =</span> error_vec</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>                          )) <span class="sc">+</span> <span class="co"># set aesthetics</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> <span class="co"># Use geom_tile for heatmap</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># Set theme</span></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">"blue"</span>, <span class="co"># Choose low color</span></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mid =</span> <span class="st">"white"</span>, <span class="co"># Choose mid color</span></span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">high =</span> <span class="st">"red"</span>, <span class="co"># Choose high color</span></span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span><span class="fu">mean</span>(res_db<span class="sc">$</span>error), <span class="co"># Choose mid point</span></span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">space =</span> <span class="st">"Lab"</span>, </span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span><span class="st">"grey"</span>, <span class="co"># Choose NA value</span></span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="st">"colourbar"</span>, <span class="co"># Set color bar</span></span>
+<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">aesthetics =</span> <span class="st">"fill"</span>) <span class="sc">+</span> <span class="co"># Select aesthetics to apply</span></span>
+<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Minimum Child Weight"</span>, <span class="at">y =</span> <span class="st">"Max Depth"</span>, <span class="at">fill =</span> <span class="st">"Error"</span>) <span class="co"># Set labels</span></span>
+<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a>g_3 <span class="co"># Generate plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>res_db</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   max_depth min_child_weight   auc_vec error_vec
+1          3                1 0.8425737 0.2223360
+2          5                1 0.8431862 0.2434599
+3          7                1 0.8336240 0.2474008
+4         10                1 0.8219934 0.2439526
+5         15                1 0.8219934 0.2439526
+6          3                3 0.8386392 0.2328666
+7          5                3 0.8530310 0.2435831
+8          7                3 0.8572717 0.2506655
+9         10                3 0.8556290 0.2440152
+10        15                3 0.8556290 0.2440152
+11         3                5 0.8096651 0.2291721
+12         5                5 0.8417862 0.2259118
+13         7                5 0.8638635 0.2225888
+14        10                5 0.8613771 0.2225888
+15        15                5 0.8613771 0.2225888
+16         3                7 0.8505343 0.2190174
+17         5                7 0.8508706 0.2189526
+18         7                7 0.8516181 0.2188921
+19        10                7 0.8516181 0.2188921
+20        15                7 0.8516181 0.2188921
+21         3               10 0.8558784 0.2155043
+22         5               10 0.8606894 0.2190757
+23         7               10 0.8602746 0.2226471
+24        10               10 0.8602746 0.2226471
+25        15               10 0.8602746 0.2226471
+26         3               15 0.8122273 0.2326203
+27         5               15 0.8502092 0.2293557
+28         7               15 0.8502092 0.2293557
+29        10               15 0.8502092 0.2293557
+30        15               15 0.8502092 0.2293557</code></pre>
+</div>
+</div>
+<p>From this it appears our best set of results came from a max_depth value of 7 and a min child weight of 5.</p>
+<p>The final step in our tuning process is to lower the learning rate&nbsp;<code>eta</code>&nbsp;and add more trees, lets try a couple of different eta values here:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>bst_mod_2 <span class="ot">&lt;-</span> <span class="fu">xgb.cv</span>(<span class="at">data =</span> dtrain,</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nfold =</span> <span class="dv">5</span>, </span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eta =</span> <span class="fl">0.1</span>, </span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num_class =</span> <span class="dv">3</span>,</span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max.depth =</span> <span class="dv">7</span>, </span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">min_child_weight =</span> <span class="dv">3</span>, </span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nrounds =</span> <span class="dv">1000</span>, </span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">verbose =</span> <span class="dv">1</span>, </span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nthread =</span> <span class="dv">1</span>, </span>
+<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">print_every_n =</span> <span class="dv">100</span>, </span>
+<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">objective =</span>  <span class="st">"multi:softmax"</span>, </span>
+<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"auc"</span>,</span>
+<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"merror"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] train-auc:0.954612+0.003544 train-merror:0.144916+0.015762  test-auc:0.809110+0.053877  test-merror:0.286254+0.051951 
+[101]   train-auc:1.000000+0.000000 train-merror:0.002647+0.002161  test-auc:0.858866+0.049536  test-merror:0.261194+0.039769 
+[201]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.857046+0.051161  test-merror:0.261380+0.039596 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.857568+0.052834  test-merror:0.257931+0.033915 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858345+0.054778  test-merror:0.254421+0.023525 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858791+0.056095  test-merror:0.261440+0.029516 
+[601]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.857858+0.056366  test-merror:0.261440+0.029516 
+[701]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858400+0.056560  test-merror:0.257869+0.027365 
+[801]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858667+0.057119  test-merror:0.254360+0.033620 
+[901]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858364+0.056832  test-merror:0.254360+0.033620 
+[1000]  train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858544+0.056888  test-merror:0.247340+0.028994 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>bst_mod_3 <span class="ot">&lt;-</span> <span class="fu">xgb.cv</span>(<span class="at">data =</span> dtrain,</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nfold =</span> <span class="dv">5</span>, </span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eta =</span> <span class="fl">0.05</span>, </span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num_class =</span> <span class="dv">3</span>,</span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max.depth =</span> <span class="dv">7</span>, </span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">min_child_weight =</span> <span class="dv">3</span>, </span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nrounds =</span> <span class="dv">1000</span>, </span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">verbose =</span> <span class="dv">1</span>, </span>
+<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nthread =</span> <span class="dv">1</span>, </span>
+<span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">print_every_n =</span> <span class="dv">100</span>, </span>
+<span id="cb80-12"><a href="#cb80-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">objective =</span> <span class="st">"multi:softmax"</span>, </span>
+<span id="cb80-13"><a href="#cb80-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"auc"</span>,</span>
+<span id="cb80-14"><a href="#cb80-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"merror"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] train-auc:0.954563+0.003477 train-merror:0.144916+0.015762  test-auc:0.808546+0.054052  test-merror:0.286254+0.051951 
+[101]   train-auc:0.999608+0.000195 train-merror:0.013259+0.002836  test-auc:0.854279+0.046830  test-merror:0.254421+0.028434 
+[201]   train-auc:1.000000+0.000000 train-merror:0.003536+0.001768  test-auc:0.858278+0.052175  test-merror:0.257869+0.031685 
+[301]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858390+0.051854  test-merror:0.264949+0.023731 
+[401]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.857743+0.054617  test-merror:0.261378+0.021584 
+[501]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.858244+0.054814  test-merror:0.264949+0.020871 
+[601]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859377+0.052515  test-merror:0.261501+0.017000 
+[701]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859570+0.052183  test-merror:0.257992+0.023934 
+[801]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859048+0.052771  test-merror:0.254421+0.023525 
+[901]   train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859477+0.053259  test-merror:0.264949+0.020871 
+[1000]  train-auc:1.000000+0.000000 train-merror:0.000000+0.000000  test-auc:0.859737+0.053874  test-merror:0.264949+0.020871 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>bst_mod_4 <span class="ot">&lt;-</span> <span class="fu">xgb.cv</span>(<span class="at">data =</span> dtrain,</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nfold =</span> <span class="dv">5</span>, </span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eta =</span> <span class="fl">0.01</span>, </span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num_class =</span> <span class="dv">3</span>,</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max.depth =</span> <span class="dv">7</span>, </span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">min_child_weight =</span> <span class="dv">3</span>, </span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nrounds =</span> <span class="dv">1000</span>, </span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">verbose =</span> <span class="dv">1</span>, </span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nthread =</span> <span class="dv">1</span>, </span>
+<span id="cb82-11"><a href="#cb82-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">print_every_n =</span> <span class="dv">100</span>, </span>
+<span id="cb82-12"><a href="#cb82-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">objective =</span> <span class="st">"multi:softmax"</span>, </span>
+<span id="cb82-13"><a href="#cb82-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"auc"</span>,</span>
+<span id="cb82-14"><a href="#cb82-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"merror"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] train-auc:0.954338+0.003776 train-merror:0.144916+0.015762  test-auc:0.807843+0.053598  test-merror:0.286254+0.051951 
+[101]   train-auc:0.986782+0.002807 train-merror:0.092785+0.012066  test-auc:0.822127+0.044569  test-merror:0.261069+0.033897 
+[201]   train-auc:0.994778+0.000923 train-merror:0.058310+0.012917  test-auc:0.833230+0.048400  test-merror:0.264763+0.024041 
+[301]   train-auc:0.998180+0.000805 train-merror:0.035336+0.004827  test-auc:0.846279+0.040973  test-merror:0.271720+0.032949 
+[401]   train-auc:0.999107+0.000554 train-merror:0.022970+0.003312  test-auc:0.852183+0.043480  test-merror:0.257623+0.044358 
+[501]   train-auc:0.999602+0.000195 train-merror:0.015906+0.002197  test-auc:0.856249+0.048031  test-merror:0.257808+0.038014 
+[601]   train-auc:0.999862+0.000072 train-merror:0.010596+0.002139  test-auc:0.857791+0.049089  test-merror:0.261380+0.039596 
+[701]   train-auc:0.999960+0.000023 train-merror:0.006179+0.003518  test-auc:0.860440+0.050490  test-merror:0.264828+0.044194 
+[801]   train-auc:0.999964+0.000018 train-merror:0.004417+0.000016  test-auc:0.860303+0.052756  test-merror:0.268276+0.049331 
+[901]   train-auc:0.999992+0.000016 train-merror:0.003536+0.001768  test-auc:0.860631+0.052665  test-merror:0.268276+0.049331 
+[1000]  train-auc:1.000000+0.000000 train-merror:0.003536+0.001768  test-auc:0.860699+0.052092  test-merror:0.271785+0.044208 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>bst_mod_5 <span class="ot">&lt;-</span> <span class="fu">xgb.cv</span>(<span class="at">data =</span> dtrain,</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nfold =</span> <span class="dv">5</span>, </span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eta =</span> <span class="fl">0.005</span>,</span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num_class =</span> <span class="dv">3</span>,</span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max.depth =</span> <span class="dv">7</span>, </span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">min_child_weight =</span> <span class="dv">3</span>, </span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nrounds =</span> <span class="dv">1000</span>, </span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">verbose =</span> <span class="dv">1</span>, </span>
+<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nthread =</span> <span class="dv">1</span>, </span>
+<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">print_every_n =</span> <span class="dv">100</span>, </span>
+<span id="cb84-12"><a href="#cb84-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">objective =</span> <span class="st">"multi:softmax"</span>, </span>
+<span id="cb84-13"><a href="#cb84-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"auc"</span>,</span>
+<span id="cb84-14"><a href="#cb84-14" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb84-15"><a href="#cb84-15" aria-hidden="true" tabindex="-1"></a>                   <span class="at">eval_metric =</span> <span class="st">"merror"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] train-auc:0.954344+0.003781 train-merror:0.144916+0.015762  test-auc:0.807843+0.053598  test-merror:0.286254+0.051951 
+[101]   train-auc:0.979626+0.004684 train-merror:0.107798+0.013735  test-auc:0.824302+0.048476  test-merror:0.240195+0.019939 
+[201]   train-auc:0.986809+0.002815 train-merror:0.093666+0.014232  test-auc:0.821943+0.045445  test-merror:0.261069+0.033897 
+[301]   train-auc:0.992033+0.001692 train-merror:0.069799+0.009076  test-auc:0.827376+0.051511  test-merror:0.257560+0.039520 
+[401]   train-auc:0.994741+0.000926 train-merror:0.057429+0.011863  test-auc:0.832582+0.048491  test-merror:0.264763+0.024041 
+[501]   train-auc:0.997028+0.000756 train-merror:0.045039+0.012846  test-auc:0.841290+0.044512  test-merror:0.271783+0.031438 
+[601]   train-auc:0.998183+0.000813 train-merror:0.034455+0.006488  test-auc:0.845924+0.041643  test-merror:0.271720+0.032949 
+[701]   train-auc:0.998810+0.000649 train-merror:0.029153+0.006604  test-auc:0.849978+0.043880  test-merror:0.264640+0.038777 
+[801]   train-auc:0.999135+0.000527 train-merror:0.022089+0.004848  test-auc:0.851383+0.043367  test-merror:0.261194+0.041342 
+[901]   train-auc:0.999356+0.000336 train-merror:0.018557+0.003335  test-auc:0.853319+0.045631  test-merror:0.264765+0.039404 
+[1000]  train-auc:0.999541+0.000241 train-merror:0.015906+0.002197  test-auc:0.854547+0.046650  test-merror:0.257808+0.038014 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract results for model with eta = 0.3</span></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bst_tune<span class="sc">$</span>evaluation_log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "iter"              "train_auc_mean"    "train_auc_std"    
+[4] "train_merror_mean" "train_merror_std"  "test_auc_mean"    
+[7] "test_auc_std"      "test_merror_mean"  "test_merror_std"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>pd1 <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(bst_tune<span class="sc">$</span>evaluation_log[,<span class="fu">c</span>(<span class="st">"iter"</span>, <span class="st">"test_merror_mean"</span>)], <span class="fu">rep</span>(<span class="fl">0.3</span>, <span class="fu">nrow</span>(bst_tune<span class="sc">$</span>evaluation_log)))</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pd1)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"eta"</span></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract results for model with eta = 0.1</span></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>pd2 <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(bst_mod_2<span class="sc">$</span>evaluation_log[,<span class="fu">c</span>(<span class="st">"iter"</span>, <span class="st">"test_merror_mean"</span>)], <span class="fu">rep</span>(<span class="fl">0.1</span>, <span class="fu">nrow</span>(bst_mod_2<span class="sc">$</span>evaluation_log)))</span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pd2)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"eta"</span></span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract results for model with eta = 0.05</span></span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>pd3 <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(bst_mod_3<span class="sc">$</span>evaluation_log[,<span class="fu">c</span>(<span class="st">"iter"</span>, <span class="st">"test_merror_mean"</span>)], <span class="fu">rep</span>(<span class="fl">0.05</span>, <span class="fu">nrow</span>(bst_mod_3<span class="sc">$</span>evaluation_log)))</span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pd3)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"eta"</span></span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract results for model with eta = 0.01</span></span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a>pd4 <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(bst_mod_4<span class="sc">$</span>evaluation_log[,<span class="fu">c</span>(<span class="st">"iter"</span>, <span class="st">"test_merror_mean"</span>)], <span class="fu">rep</span>(<span class="fl">0.01</span>, <span class="fu">nrow</span>(bst_mod_4<span class="sc">$</span>evaluation_log)))</span>
+<span id="cb88-11"><a href="#cb88-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pd4)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"eta"</span></span>
+<span id="cb88-12"><a href="#cb88-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract results for model with eta = 0.005</span></span>
+<span id="cb88-13"><a href="#cb88-13" aria-hidden="true" tabindex="-1"></a>pd5 <span class="ot">&lt;-</span> <span class="fu">cbind.data.frame</span>(bst_mod_5<span class="sc">$</span>evaluation_log[,<span class="fu">c</span>(<span class="st">"iter"</span>, <span class="st">"test_merror_mean"</span>)], <span class="fu">rep</span>(<span class="fl">0.005</span>, <span class="fu">nrow</span>(bst_mod_5<span class="sc">$</span>evaluation_log)))</span>
+<span id="cb88-14"><a href="#cb88-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pd5)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"eta"</span></span>
+<span id="cb88-15"><a href="#cb88-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-16"><a href="#cb88-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-17"><a href="#cb88-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Join datasets</span></span>
+<span id="cb88-18"><a href="#cb88-18" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">rbind.data.frame</span>(pd1, pd2, pd3, pd4, pd5)</span>
+<span id="cb88-19"><a href="#cb88-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Converty ETA to factor</span></span>
+<span id="cb88-20"><a href="#cb88-20" aria-hidden="true" tabindex="-1"></a>plot_data<span class="sc">$</span>eta <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(plot_data<span class="sc">$</span>eta)</span>
+<span id="cb88-21"><a href="#cb88-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot points</span></span>
+<span id="cb88-22"><a href="#cb88-22" aria-hidden="true" tabindex="-1"></a>g_6 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> iter, <span class="at">y =</span> test_merror_mean, <span class="at">color =</span> eta))<span class="sc">+</span></span>
+<span id="cb88-23"><a href="#cb88-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb88-24"><a href="#cb88-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># Set theme</span></span>
+<span id="cb88-25"><a href="#cb88-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(), <span class="co"># Remove grid</span></span>
+<span id="cb88-26"><a href="#cb88-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(), <span class="co"># Remove grid</span></span>
+<span id="cb88-27"><a href="#cb88-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_blank</span>(), <span class="co"># Remove grid</span></span>
+<span id="cb88-28"><a href="#cb88-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> <span class="co"># Remove grid </span></span>
+<span id="cb88-29"><a href="#cb88-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of Trees"</span>, <span class="at">title =</span> <span class="st">"Error Rate v Number of Trees"</span>,</span>
+<span id="cb88-30"><a href="#cb88-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Error Rate"</span>, <span class="at">color =</span> <span class="st">"Learning </span><span class="sc">\n</span><span class="st"> Rate"</span>)  <span class="co"># Set labels</span></span>
+<span id="cb88-31"><a href="#cb88-31" aria-hidden="true" tabindex="-1"></a>g_6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The lowest error rate belongs to eta: 0.1 It looks like we will need around 50-100 trees</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>best_bal <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(<span class="at">data =</span> dtrain,</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>                    <span class="co">#nfold = 5,</span></span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max.depth =</span> <span class="dv">7</span>,</span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num_class =</span> <span class="dv">3</span>,</span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">min_child_weight =</span> <span class="dv">3</span>,</span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nrounds =</span> <span class="dv">600</span>, <span class="co">#number of trees</span></span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">verbose =</span> <span class="dv">1</span>,</span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nthread =</span> <span class="dv">1</span>,</span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">print_every_n =</span> <span class="dv">50</span>,</span>
+<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">objective =</span> <span class="st">"multi:softmax"</span>,</span>
+<span id="cb89-13"><a href="#cb89-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"auc"</span>,</span>
+<span id="cb89-14"><a href="#cb89-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"merror"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] train-auc:0.959943  train-merror:0.106007 
+[51]    train-auc:0.999503  train-merror:0.017668 
+[101]   train-auc:1.000000  train-merror:0.003534 
+[151]   train-auc:1.000000  train-merror:0.000000 
+[201]   train-auc:1.000000  train-merror:0.000000 
+[251]   train-auc:1.000000  train-merror:0.000000 
+[301]   train-auc:1.000000  train-merror:0.000000 
+[351]   train-auc:1.000000  train-merror:0.000000 
+[401]   train-auc:1.000000  train-merror:0.000000 
+[451]   train-auc:1.000000  train-merror:0.000000 
+[501]   train-auc:1.000000  train-merror:0.000000 
+[551]   train-auc:1.000000  train-merror:0.000000 
+[600]   train-auc:1.000000  train-merror:0.000000 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>boost_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(best_bal, dtest)</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>(boost_preds, <span class="fu">as.numeric</span>(test_data<span class="sc">$</span>Group)<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+           
+boost_preds  0  1  2
+          0  5  0  0
+          1  2 23  4
+          2  4  3 30
+
+Overall Statistics
+                                          
+               Accuracy : 0.8169          
+                 95% CI : (0.7073, 0.8987)
+    No Information Rate : 0.4789          
+    P-Value [Acc &gt; NIR] : 4.296e-09       
+                                          
+                  Kappa : 0.6896          
+                                          
+ Mcnemar's Test P-Value : 0.1049          
+
+Statistics by Class:
+
+                     Class: 0 Class: 1 Class: 2
+Sensitivity           0.45455   0.8846   0.8824
+Specificity           1.00000   0.8667   0.8108
+Pos Pred Value        1.00000   0.7931   0.8108
+Neg Pred Value        0.90909   0.9286   0.8824
+Prevalence            0.15493   0.3662   0.4789
+Detection Rate        0.07042   0.3239   0.4225
+Detection Prevalence  0.07042   0.4085   0.5211
+Balanced Accuracy     0.72727   0.8756   0.8466</code></pre>
+</div>
+</div>
+<p>The Accuracy of the tune XGBoost model is 0.8169. Not as good as the bagging but still better than the original Random Forest</p>
+</section>
+</section>
+<section id="which-features-are-most-important" class="level1">
+<h1>Which features are most important?</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>bag_mod_4 <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Group <span class="sc">~</span>., <span class="co"># Set tree formula</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> train_data[, <span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(train_data)], <span class="co"># Set dataset</span></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">mtry =</span> <span class="dv">11</span>, <span class="co"># Set number of variables to try  </span></span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">ntree =</span> <span class="dv">500</span>, <span class="co"># Set number of trees</span></span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">nodesize =</span> <span class="dv">10</span>,  <span class="co"># Set node size</span></span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">importance =</span> <span class="cn">TRUE</span>, <span class="co"># Set to true to generate importance matrix</span></span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">proximity =</span> <span class="cn">TRUE</span>) <span class="co"># Set to true to generate proximity matrix</span></span>
+<span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Importance</span></span>
+<span id="cb93-9"><a href="#cb93-9" aria-hidden="true" tabindex="-1"></a>importance_matrix <span class="ot">&lt;-</span> randomForest<span class="sc">::</span><span class="fu">importance</span>(bag_mod_4)</span>
+<span id="cb93-10"><a href="#cb93-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print importance matrix</span></span>
+<span id="cb93-11"><a href="#cb93-11" aria-hidden="true" tabindex="-1"></a>importance_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Converted   Demented Nondemented MeanDecreaseAccuracy
+Visit    -3.05704376 -0.1050019   1.8165353             1.251956
+MR.Delay -0.06030399  4.5464498   0.4755235             2.690890
+M.F       3.02624037  4.7620373  14.2636421            14.683415
+Hand      0.00000000  0.0000000   0.0000000             0.000000
+Age       2.41092618  2.4045138   6.8610898             7.619019
+EDUC      1.45960206  7.5598498  13.1655081            14.983336
+SES       3.82627943  3.4095141   8.8557103             9.867451
+MMSE     -3.51156524 55.0759200  58.6683735            71.518863
+eTIV      0.74121000  1.4150081  10.3912896            10.352447
+nWBV     -2.10750425  9.6990429  18.3831407            18.943532
+ASF       1.33301056  3.0185758  10.5792533            11.431335
+         MeanDecreaseGini
+Visit           0.8161166
+MR.Delay        7.2599865
+M.F             4.0141726
+Hand            0.0000000
+Age             9.1466617
+EDUC            6.5079182
+SES             4.6495026
+MMSE           58.3729577
+eTIV            6.6667717
+nWBV           12.1696556
+ASF             6.4696845</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(bag_mod_4, <span class="at">type =</span><span class="dv">2</span>, <span class="at">n.var =</span> <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>imp_mat <span class="ot">&lt;-</span> <span class="fu">xgb.importance</span>(<span class="at">model =</span> best_bal)</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xgb.plot.importance</span>(imp_mat, <span class="at">top_n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"C:/Users/noell/Downloads/a_insights_shap_functions.r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>xgdata2 <span class="ot">&lt;-</span> xgdata[<span class="fu">which</span>(xgdata<span class="sc">$</span>Group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)), ]</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>dtrain2 <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> <span class="fu">as.matrix</span>(xgdata2[, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(xgdata2)]), <span class="at">label =</span> xgdata2<span class="sc">$</span>Group <span class="sc">-</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111111</span>)</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>bst <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(<span class="at">data =</span> dtrain2, <span class="co"># Set training data</span></span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nrounds =</span> <span class="dv">100</span>,</span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
+<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max.depth =</span> <span class="dv">7</span>,</span>
+<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">min_child_weight =</span> <span class="dv">5</span>,<span class="co"># Set number of rounds</span></span>
+<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">verbose =</span> <span class="dv">1</span>, <span class="co"># 1 - Prints out fit</span></span>
+<span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">print_every_n =</span> <span class="dv">20</span>, <span class="co"># Prints out result every 20th iteration</span></span>
+<span id="cb99-10"><a href="#cb99-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">objective =</span> <span class="st">"binary:logistic"</span>, <span class="co"># Set objective</span></span>
+<span id="cb99-11"><a href="#cb99-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"auc"</span>,</span>
+<span id="cb99-12"><a href="#cb99-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eval_metric =</span> <span class="st">"error"</span>) <span class="co"># Set evaluation metric to use</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] train-auc:0.906448  train-error:0.155642 
+[21]    train-auc:0.970360  train-error:0.116732 
+[41]    train-auc:0.976580  train-error:0.093385 
+[61]    train-auc:0.982864  train-error:0.081712 
+[81]    train-auc:0.987497  train-error:0.054475 
+[100]   train-auc:0.989845  train-error:0.054475 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate SHAP importance</span></span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>shap_result <span class="ot">&lt;-</span> <span class="fu">shap.score.rank</span>(<span class="at">xgb_model =</span> bst, </span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">X_train =</span><span class="fu">as.matrix</span>(xgdata2[, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(xgdata2)]),</span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">shap_approx =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: data.table</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>make SHAP score by decreasing order</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>shap_long <span class="ot">=</span> <span class="fu">shap.prep</span>(<span class="at">shap =</span> shap_result,</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">X_train =</span> <span class="fu">as.matrix</span>(xgdata2[, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(xgdata2)]), </span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">top_n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggforce</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggforce' was built under R version 4.3.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>s1 <span class="ot">&lt;-</span><span class="fu">plot.shap.summary</span>(<span class="at">data_long =</span> shap_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdark)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>s1 <span class="sc">+</span> <span class="fu">dark_theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Jester_Noelle_Machine-Learning-Project_Dementia_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
